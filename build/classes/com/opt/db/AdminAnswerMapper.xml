@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AdminAnswerMapper">
+	
+	<select id="adminanswerList" resultType="AdminanswerDto">
+	SELECT * FROM OPT_ADMIN_ANSWER	
+	</select>
+	
+	<insert id="adminAnswerInsert" parameterType="AdminanswerDto">
+	INSERT INTO OPT_ADMIN_ANSWER VALUES(
+	#{customer_no_seq},
+	#{opt_no_seq},
+	ADMINANSWERSEQ.NEXTVAL,
+	#{admin_answer_content},
+	SYSDATE	
+	)
+	</insert>
+	
+	<delete id="adminAnswerDelete" parameterType="int">
+	DELETE FROM OPT_ADMIN_ANSWER
+	WHERE ADMIN_ANSWER_NO_SEQ = #{admin_answer_no_seq}
+	</delete>
+
+
+</mapper>

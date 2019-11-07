@@ -1,0 +1,159 @@
+
+html,body{
+	margin:0;
+	padding:0;
+	border:0;
+	color: #888;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -1px;
+    height: 100%;
+}
+
+ul,li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+setion {
+	display:block;
+}
+
+a {
+	text-decoration: none;
+}
+
+
+/****페이징 버튼*****/
+.paging{
+    width: 400px;
+    margin: 0 auto;
+    height: 300px;
+    /* margin-top: 40px; */
+    position: relative;
+    top: 120px;
+    padding-left: 233px;
+}
+.paging_ul {
+	float:left;
+	display:inline;
+}
+.paging_ul li {
+	float:left;
+}
+.paging_ul li a {
+	float:left;
+	padding:4px;
+	margin-right:3px;
+	width: 21px;
+	color:#000;
+	font:bold 12px tahoma;
+	border:1px solid #eee;
+	text-align:center;
+	text-decoration:none;
+}
+.paging_ul li a:hover,.paging_ul li a:focus {
+	color:#fff;
+	border:1px solid #f40;
+	background-color:#f40;
+}
+/****상품검색******/
+.item_search_wrap{
+	width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    top: 85px;
+}
+
+/****상품 콘텐츠*****/
+.item_list_wrap{
+	width: 1200px;
+    margin: 0 auto;
+    /* margin-top: 170px; */
+    height: 850px;
+    position: relative;
+    top: 150px;
+}
+
+.item_list_div{
+	width: 300px;
+    height: 450px;
+    display: inline;
+    float: left;
+}
+
+
+.select-wrap
+{
+     position: relative;
+     box-sizing: border-box;
+     width: 260px;
+     overflow: hidden;
+     margin: 0 auto;
+     display: inline;
+}
+.select-box
+{
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     appearance: none;
+     width: 170px;
+     padding: 9px 9px 11px 13px;
+     background-color: #f1f1f1;
+     border: none;
+     border-radius: 3px;
+     outline: none;
+     font: 15px 'Open Sans', sans-serif;
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+     color: #666;
+     cursor: pointer;
+}
+.select-point
+{
+    position: absolute;
+    top: 1px;
+    right: 348px;
+    font: 16px 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #666;
+}
+select:-moz-focusring
+{
+     color: transparent;
+     text-shadow: 0 0 0 #000;
+}
+
+input[type=text] {
+    width: 300px;
+    height: 25px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+input {
+    outline: none;
+}
+.search_item{
+	display: inline;
+    position: relative;
+    right: 30px;
+}
+input[name=msg]{
+	position: relative;
+    top: 3px;
+}
+.item_text{
+	text-align: center;
+	padding-right: 30px;
+	line-height: 23px;
+}
+.item_text h3{
+	font-size: 20px;
+    font-weight: bold;
+    color: #4a4f56;
+}

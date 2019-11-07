@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PostboxMapper">
+
+
+
+	<select id="postboxReciveList" parameterType="String" resultType="postboxDto">
+		SELECT *
+		FROM OPT_POSTBOX
+		WHERE POST_RECIVE_ID = #{id}
+		AND POST_READ_DEL = 'N'		
+	</select>
+	
+	<select id="postboxReciveListPage" parameterType="map" resultType="postboxDto">
+		SELECT R, OPT_ID ,OPT_NO_SEQ, POST_NO_SEQ, POST_RECIVE_ID, POST_TITLE, POST_CONTENT, POST_SEND_DATE, POST_RECIVE_READ, POST_READ_DATE, POST_SEND_DEL, POST_READ_DEL
+    	FROM(SELECT ROWNUM AS R, OPT_ID ,OPT_NO_SEQ, POST_NO_SEQ, POST_RECIVE_ID, POST_TITLE, POST_CONTENT, POST_SEND_DATE, POST_RECIVE_READ, POST_READ_DATE, POST_SEND_DEL, POST_READ_DEL
+    	FROM(SELECT M.OPT_ID ,P.OPT_NO_SEQ, P.POST_NO_SEQ, P.POST_RECIVE_ID, P.POST_TITLE, P.POST_CONTENT, P.POST_SEND_DATE, P.POST_RECIVE_READ, P.POST_READ_DATE, P.POST_SEND_DEL, P.POST_READ_DEL
+    	FROM OPT_POSTBOX P, OPT_MEMBER M
+    	WHERE P.OPT_NO_SEQ = M.OPT_NO_SEQ
+    	AND P.POST_RECIVE_ID = #{id}
+    	AND P.POST_READ_DEL = 'N'
+    	ORDER BY P.POST_NO_SEQ DESC))
+    	WHERE R BETWEEN #{start} AND #{end}
+	</select>
+	
+	
+	<select id="sendPostboxList" parameterType="int" resultType="postboxDto">
+		SELECT *
+		FROM OPT_POSTBOX
+		WHERE OPT_NO_SEQ = #{opt_no}
+		AND POST_SEND_DEL = 'N'		
+	</select>
+	
+	
+	<select id="sendPostboxListPage" parameterType="map" resultType="postboxDto">
+		SELECT R, OPT_ID ,OPT_NO_SEQ, POST_NO_SEQ, POST_RECIVE_ID, POST_TITLE, POST_CONTENT, POST_SEND_DATE, POST_RECIVE_READ, POST_READ_DATE, POST_SEND_DEL, POST_READ_DEL
+    	FROM(SELECT ROWNUM AS R, OPT_ID ,OPT_NO_SEQ, POST_NO_SEQ, POST_RECIVE_ID, POST_TITLE, POST_CONTENT, POST_SEND_DATE, POST_RECIVE_READ, POST_READ_DATE, POST_SEND_DEL, POST_READ_DEL
+    	FROM(SELECT M.OPT_ID ,P.OPT_NO_SEQ, P.POST_NO_SEQ, P.POST_RECIVE_ID, P.POST_TITLE, P.POST_CONTENT, P.POST_SEND_DATE, P.POST_RECIVE_READ, P.POST_READ_DATE, P.POST_SEND_DEL, P.POST_READ_DEL
+    	FROM OPT_POSTBOX P, OPT_MEMBER M
+    	WHERE P.OPT_NO_SEQ = M.OPT_NO_SEQ
+    	AND P.OPT_NO_SEQ = #{opt_no}
+    	AND P.POST_SEND_DEL = 'N'
+    	ORDER BY P.POST_NO_SEQ DESC))
+    	WHERE R BETWEEN #{start} AND #{end}
+	</select>
+	
+	
+	
+	<select id="postboxDetail" parameterType="int" resultType="postboxDto">
+    	SELECT OPT_ID ,OPT_NO_SEQ, POST_NO_SEQ, POST_RECIVE_ID, POST_TITLE, POST_CONTENT, POST_SEND_DATE, POST_RECIVE_READ, POST_READ_DATE, POST_SEND_DEL, POST_READ_DEL
+    	FROM(SELECT M.OPT_ID ,P.OPT_NO_SEQ, P.POST_NO_SEQ, P.POST_RECIVE_ID, P.POST_TITLE, P.POST_CONTENT, P.POST_SEND_DATE, P.POST_RECIVE_READ, P.POST_READ_DATE, P.POST_SEND_DEL, P.POST_READ_DEL
+    	FROM OPT_POSTBOX P, OPT_MEMBER M
+    	WHERE P.OPT_NO_SEQ = M.OPT_NO_SEQ
+		AND POST_NO_SEQ = #{post_no})
+	</select>
+	
+	
+	<update id="postboxRead" parameterType="int">
+		UPDATE OPT_POSTBOX SET
+		POST_READ_DATE = 
+			CASE
+				WHEN POST_RECIVE_READ = 'N'
+				THEN TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI')
+				ELSE POST_READ_DATE
+				END,					
+		POST_RECIVE_READ = 'Y'
+		WHERE POST_NO_SEQ = #{post_no}
+	</update>
+	
+	<update id="readDel" parameterType="int">
+		UPDATE OPT_POSTBOX SET
+		POST_READ_DEL = 'Y'
+		WHERE POST_NO_SEQ = #{post_no}	
+	</update>
+	
+	
+	<update id="sendDel" parameterType="int">
+		UPDATE OPT_POSTBOX SET
+		POST_SEND_DEL = 'Y'
+		WHERE POST_NO_SEQ = #{post_no}	
+	</update>
+	
+	
+	<delete id="allDel">
+		DELETE FROM OPT_POSTBOX
+		WHERE POST_SEND_DEL = 'Y'
+		AND POST_READ_DEL = 'Y'		
+	</delete>
+	
+	<update id="multiSendDel" parameterType="map">
+		UPDATE OPT_POSTBOX SET
+		POST_SEND_DEL = 'Y'
+		WHERE POST_NO_SEQ IN
+		<foreach collection="post_no" item="post_no_seq" open="(" separator="," close=")">
+			#{post_no_seq}
+		</foreach>
+	</update>
+	
+	
+	<update id="multiReadDel" parameterType="map">
+		UPDATE OPT_POSTBOX SET
+		POST_READ_DEL = 'Y'
+		WHERE POST_NO_SEQ IN
+		<foreach collection="post_no" item="post_no_seq" open="(" separator="," close=")">
+			#{post_no_seq}
+		</foreach>
+	</update>
+	
+	<insert id="sendPost" parameterType="map">
+		INSERT INTO OPT_POSTBOX VALUES(
+		#{opt_no}, POSTSEQ.NEXTVAL, #{id}, #{title}, #{content},
+		TO_CHAR(SYSDATE, 'YYYY/MM/DD HH24:MI'), 'N', TO_CHAR(SYSDATE, 'YYYY-MM-DD-HH24-MI'), 'N', 'N'
+		)	
+	</insert>
+	
+	
+</mapper>

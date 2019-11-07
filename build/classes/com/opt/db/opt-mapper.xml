@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="optmapper">
+
+	<select id="selectList" resultType="MemberDto">
+		SELECT *
+		FROM OPT_MEMBER
+		ORDER BY OPT_NO_SEQ
+	</select>
+	
+	<select id="idChk" parameterType="String" resultType="MemberDto">
+		SELECT *
+		FROM OPT_MEMBER
+		WHERE OPT_ID = #{opt_id}
+	</select>
+	
+	<update id="updatePoint" parameterType="map">
+		UPDATE OPT_MEMBER SET
+		OPT_POINT = OPT_POINT - #{point}
+		WHERE OPT_NO_SEQ = #{opt_no_seq}
+	</update>
+
+</mapper>

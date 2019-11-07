@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CouponMapper">
+
+	<select id="coupon_count" resultType="int">
+		SELECT COUNT(*)
+		FROM OPT_COUPON C, OPT_MEMBER M
+		WHERE C.OPT_NO_SEQ = M.OPT_NO_SEQ
+		AND C.OPT_NO_SEQ = #{num}
+	</select>
+	
+	<select id="couponList" parameterType="int" resultType="couponDto">
+		SELECT *
+		FROM OPT_COUPON
+		WHERE OPT_NO_SEQ = #{no}
+	</select>
+	
+	<select id="CouponPaging" parameterType="map" resultType="couponDto">
+	    SELECT R,COUPON_NO_SEQ,COUPON_NO,COUPON_NAME,COUPON_CONTENT,COUPON_DATE,COUPON_SALE 
+		FROM(SELECT ROWNUM AS R ,COUPON_NO_SEQ,COUPON_NO,COUPON_NAME,COUPON_CONTENT,COUPON_DATE,COUPON_SALE 		
+		FROM(SELECT COUPON_NO_SEQ,COUPON_NO,COUPON_NAME,COUPON_CONTENT,COUPON_DATE,COUPON_SALE
+		FROM OPT_COUPON WHERE OPT_NO_SEQ = #{opt_no_seq}
+		ORDER BY COUPON_DATE))
+		WHERE R BETWEEN #{start} AND #{end}
+	</select>
+	
+	<delete id="deleteCoupon" parameterType="int">
+		DELETE FROM OPT_COUPON
+		WHERE COUPON_NO_SEQ = #{coupon_no_seq}	
+	</delete>
+	
+</mapper>

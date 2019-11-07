@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VideoMapper">
+
+	<select id="videolist" resultType="VideoClipDto">
+		SELECT *
+		FROM OPT_VIDEO_CLIP
+		ORDER BY VIDEO_NO_SEQ DESC
+	</select>
+
+	<select id="videoPage" parameterType="map" resultType="VideoClipDto">
+		SELECT R, OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_URL,
+		VIDEO_TITLE,
+		VIDEO_CONTENT, VIDEO_REGDATE, VIDEO_VIEWS_NO
+		FROM(SELECT
+		ROWNUM R,
+		OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_URL, VIDEO_TITLE,
+		VIDEO_CONTENT, VIDEO_REGDATE, VIDEO_VIEWS_NO
+		FROM(SELECT M.OPT_ID,
+		V.OPT_NO_SEQ, V.VIDEO_NO_SEQ, V.VIDEO_URL, V.VIDEO_TITLE,
+		V.VIDEO_CONTENT, V.VIDEO_REGDATE, V.VIDEO_VIEWS_NO
+		FROM OPT_VIDEO_CLIP
+		V, OPT_MEMBER M
+		WHERE V.OPT_NO_SEQ = M.OPT_NO_SEQ
+		ORDER BY VIDEO_NO_SEQ DESC))
+		WHERE R BETWEEN
+		#{start} AND #{end}
+	</select>
+	
+	<select id="myVideolist" parameterType="int" resultType="VideoClipDto">
+		SELECT *
+		FROM OPT_VIDEO_CLIP
+		WHERE OPT_NO_SEQ = #{no}
+		ORDER BY VIDEO_NO_SEQ DESC
+	</select>
+	
+	<select id="myVideoListPage" parameterType="map" resultType="VideoClipDto">
+		SELECT R, OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_URL, VIDEO_TITLE,VIDEO_CONTENT, VIDEO_REGDATE, VIDEO_VIEWS_NO
+		FROM(SELECT ROWNUM R,OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_URL, VIDEO_TITLE, VIDEO_CONTENT, VIDEO_REGDATE, VIDEO_VIEWS_NO
+		FROM(SELECT M.OPT_ID, V.OPT_NO_SEQ, V.VIDEO_NO_SEQ, V.VIDEO_URL, V.VIDEO_TITLE,	V.VIDEO_CONTENT, V.VIDEO_REGDATE, V.VIDEO_VIEWS_NO
+		FROM OPT_VIDEO_CLIP V, OPT_MEMBER M
+		WHERE V.OPT_NO_SEQ = M.OPT_NO_SEQ		
+		ORDER BY VIDEO_NO_SEQ DESC))
+		WHERE R BETWEEN
+		#{start} AND #{end}
+		AND OPT_NO_SEQ = #{no}	
+	</select>
+
+	<select id="searchVideo" parameterType="map"
+		resultType="VideoClipDto">
+		SELECT OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_URL, VIDEO_TITLE,
+		VIDEO_CONTENT, VIDEO_REGDATE, VIDEO_VIEWS_NO
+		FROM(SELECT M.OPT_ID,
+		V.OPT_NO_SEQ, V.VIDEO_NO_SEQ, V.VIDEO_URL, V.VIDEO_TITLE,
+		V.VIDEO_CONTENT, V.VIDEO_REGDATE, V.VIDEO_VIEWS_NO
+		FROM OPT_VIDEO_CLIP
+		V, OPT_MEMBER M
+		<where>
+			V.OPT_NO_SEQ = M.OPT_NO_SEQ
+			<if test="searchtext != null and searchoption == 'opt_id'">
+				AND OPT_ID LIKE '%'||#{searchtext}||'%'
+			</if>
+			<if test="searchtext != null and searchoption == 'video_title'">
+				AND VIDEO_TITLE LIKE '%'||#{searchtext}||'%'
+			</if>
+			<if test="searchtext != null and searchoption == 'video_content'">
+				AND VIDEO_CONTENT LIKE '%'||#{searchtext}||'%'
+			</if>
+		</where>
+		ORDER BY VIDEO_NO_SEQ DESC)
+	</select>
+
+
+	<select id="searchVideoPage" parameterType="map"
+		resultType="VideoClipDto">
+		SELECT R, OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_URL, VIDEO_TITLE,
+		VIDEO_CONTENT, VIDEO_REGDATE, VIDEO_VIEWS_NO
+		FROM(SELECT ROWNUM R,
+		OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_URL, VIDEO_TITLE,
+		VIDEO_CONTENT, VIDEO_REGDATE, VIDEO_VIEWS_NO
+		FROM(SELECT M.OPT_ID,
+		V.OPT_NO_SEQ, V.VIDEO_NO_SEQ, V.VIDEO_URL, V.VIDEO_TITLE,
+		V.VIDEO_CONTENT, V.VIDEO_REGDATE, V.VIDEO_VIEWS_NO
+		FROM OPT_VIDEO_CLIP
+		V, OPT_MEMBER M
+		<where>
+			V.OPT_NO_SEQ = M.OPT_NO_SEQ
+			<if test="searchtext != null and searchoption == 'opt_id'">
+				AND OPT_ID LIKE '%'||#{searchtext}||'%'
+			</if>
+			<if test="searchtext!= null and searchoption == 'video_title'">
+				AND VIDEO_TITLE LIKE '%'||#{searchtext}||'%'
+			</if>
+			<if test="searchtext!= null and searchoption == 'video_content'">
+				AND VIDEO_CONTENT LIKE '%'||#{searchtext}||'%'
+			</if>			
+		</where>
+		ORDER BY VIDEO_NO_SEQ DESC))
+		WHERE R BETWEEN #{start} AND #{end}
+	</select>
+
+	<update id="videoCount" parameterType="int">
+		UPDATE OPT_VIDEO_CLIP
+		SET
+		VIDEO_VIEWS_NO = VIDEO_VIEWS_NO +1
+		WHERE VIDEO_NO_SEQ = #{no}
+	</update>
+
+	<select id="videoSelectOne" parameterType="int"
+		resultType="VideoClipDto">
+		SELECT *
+		FROM OPT_VIDEO_CLIP A, OPT_MEMBER B
+		WHERE A.VIDEO_NO_SEQ = #{video_no_seq} AND A.OPT_NO_SEQ = B.OPT_NO_SEQ
+	</select>
+
+	<select id="search" parameterType="map"
+		resultType="VideoCommentDto">
+		SELECT *
+		FROM OPT_VIDEO_CLIP
+		<choose>
+			<when test="searchtext == ''">
+				ORDER BY OPT_NO_SEQ
+			</when>
+			<when test="searchoption == 'seq'">
+				WHERE VIDEO_NO_SEQ=#{searchtext}
+			</when>
+			<when test="searchoption == 'writer'">
+				WHERE OPT_NO_SEQ LIKE '%' || #{searchtext} || '%'
+			</when>
+			<when test="searchoption == 'title'">
+				WHERE VIDEO_TITLE LIKE '%' || #{searchtext} || '%'
+			</when>
+		</choose>
+	</select>
+
+	<insert id="insertVideo" parameterType="VideoClipDto">
+		INSERT INTO
+		OPT_VIDEO_CLIP
+		VALUES(
+		#{opt_no_seq},
+		VIDEOCLIPSEQ.NEXTVAL,
+		#{video_url},
+		#{video_title},
+		#{video_content},
+		SYSDATE,
+		0
+		)
+	</insert>
+
+	<update id="updateVideo" parameterType="VideoClipDto">
+		UPDATE OPT_VIDEO_CLIP
+		SET
+		VIDEO_URL = #{video_url},
+		VIDEO_TITLE = #{video_title},
+		VIDEO_CONTENT =
+		#{video_content}
+		WHERE VIDEO_NO_SEQ = #{video_no_seq}
+	</update>
+	
+	<delete id="deleteVideoComment" parameterType="int">
+		DELETE FROM OPT_VIDEO_COMMENT
+		WHERE VIDEO_NO_SEQ = #{video_no_seq}
+	</delete>
+
+
+	<delete id="deleteVideo" parameterType="int">
+		DELETE FROM
+		OPT_VIDEO_CLIP
+		WHERE VIDEO_NO_SEQ = #{video_no_seq}
+	</delete>
+	
+	<delete id="multiDelVideoComment" parameterType="map">
+		DELETE FROM OPT_VIDEO_COMMENT
+		WHERE VIDEO_NO_SEQ IN
+		<foreach collection="seq" item="seqs" open="(" separator=","
+			close=")">
+			#{seqs}
+		</foreach>
+	</delete>
+	
+	<delete id="multiDel" parameterType="map">
+		DELETE FROM OPT_VIDEO_CLIP
+		WHERE VIDEO_NO_SEQ IN
+		<foreach collection="seq" item="seqs" open="(" separator=","
+			close=")">
+			#{seqs}
+		</foreach>
+	</delete>
+
+	<select id="videoCommentList" parameterType="int"
+		resultType="VideoCommentDto">
+		SELECT OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_COMMENT_SEQ,
+		VIDEO_REPLE, VIDEO_COMMENT_DATE
+		FROM (SELECT M.OPT_ID, VC.OPT_NO_SEQ,
+		VC.VIDEO_NO_SEQ, VC.VIDEO_COMMENT_SEQ, VC.VIDEO_REPLE,
+		VC.VIDEO_COMMENT_DATE
+		FROM OPT_VIDEO_COMMENT VC, OPT_MEMBER M
+		WHERE
+		VC.OPT_NO_SEQ = M.OPT_NO_SEQ
+		AND VIDEO_NO_SEQ = #{no}
+		ORDER BY
+		VIDEO_COMMENT_SEQ DESC)
+	</select>
+
+	<insert id="videoCommentInsert" parameterType="VideoCommentDto">
+
+		INSERT INTO
+		OPT_VIDEO_COMMENT
+		VALUES(#{opt_no_seq},#{video_no_seq},
+		VIDEOCOMMENTSEQ.NEXTVAL,#{video_reple},SYSDATE)
+
+	</insert>
+
+	<select id="videoCommentSelectone" parameterType="int"
+		resultType="VideoCommentDto">
+		SELECT OPT_ID, OPT_NO_SEQ, VIDEO_NO_SEQ, VIDEO_COMMENT_SEQ,
+		VIDEO_REPLE, VIDEO_COMMENT_DATE
+		FROM (SELECT M.OPT_ID, VC.OPT_NO_SEQ,
+		VC.VIDEO_NO_SEQ, VC.VIDEO_COMMENT_SEQ, VC.VIDEO_REPLE,
+		VC.VIDEO_COMMENT_DATE
+		FROM OPT_VIDEO_COMMENT VC, OPT_MEMBER M
+		WHERE
+		VC.OPT_NO_SEQ = M.OPT_NO_SEQ
+		AND VIDEO_COMMENT_SEQ = #{video_comment_seq}
+		ORDER BY
+		VIDEO_COMMENT_SEQ DESC)
+	</select>
+	
+	
+	<update id="videoCommentUpdate" parameterType="VideoCommentDto">
+		UPDATE
+		OPT_VIDEO_COMMENT
+		SET VIDEO_REPLE=#{video_reple}
+		WHERE
+		VIDEO_COMMENT_SEQ=#{video_comment_seq}
+
+	</update>
+	<delete id="videoCommentDelete" parameterType="int">
+		DELETE FROM
+		OPT_VIDEO_COMMENT
+		WHERE VIDEO_COMMENT_SEQ=#{video_comment_seq}
+	</delete>
+
+
+</mapper>

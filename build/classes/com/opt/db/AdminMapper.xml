@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AdminMapper">
+
+	<update id="adminUserUpdate">
+		UPDATE OPT_MEMBER
+		SET OPT_ENABLED = #{enabled}, OPT_ROLE = #{role}
+		WHERE OPT_ID = #{id}
+	</update>
+	
+	<update id="adminItemUpdate">
+		UPDATE OPT_ITEM
+		SET ITEM_NAME = #{item_name}, ITEM_PRICE = #{item_price}, ITEM_CONTENT = #{item_content}
+		WHERE ITEM_NUM_SEQ = #{item_num_seq}
+	</update>
+	
+	<select id="userPaging" resultType="MemberDto">
+		SELECT R, OPT_NO_SEQ, OPT_ID,
+			   OPT_PW, OPT_NAME, OPT_BIRTH, OPT_ADDR,
+			   OPT_PHONE, OPT_EMAIL, OPT_ENABLED, OPT_GENDER,
+			   OPT_ROLE, OPT_POINT, OPT_REGDATE
+		FROM (SELECT ROWNUM AS R, OPT_NO_SEQ, OPT_ID,
+				OPT_PW, OPT_NAME, OPT_BIRTH, OPT_ADDR,
+				OPT_PHONE, OPT_EMAIL, OPT_ENABLED, OPT_GENDER,
+				OPT_ROLE, OPT_POINT, OPT_REGDATE
+			  FROM (SELECT OPT_NO_SEQ, OPT_ID,
+							OPT_PW, OPT_NAME, OPT_BIRTH, OPT_ADDR,
+							OPT_PHONE, OPT_EMAIL, OPT_ENABLED, OPT_GENDER,
+							OPT_ROLE, OPT_POINT, OPT_REGDATE
+					FROM OPT_MEMBER
+					ORDER BY OPT_NO_SEQ)
+			  WHERE ROWNUM <![CDATA[<=]]> #{endCount})
+		WHERE R <![CDATA[>=]]> #{startCount}
+	</select>
+	
+	<select id="itemPaging" resultType="ItemDto">
+		SELECT R, ITEM_NUM_SEQ, ITEM_NAME, ITEM_PRICE, ITEM_VIEWS_NO,
+			   ITEM_CONTENT, ITEM_URL, ITEM_COUNT, ITEM_ENABLED
+		FROM (SELECT ROWNUM AS R, ITEM_NUM_SEQ, ITEM_NAME, ITEM_PRICE,
+				     ITEM_VIEWS_NO, ITEM_CONTENT, ITEM_URL, ITEM_COUNT, ITEM_ENABLED
+			  FROM (SELECT ITEM_NUM_SEQ, ITEM_NAME, ITEM_PRICE, ITEM_VIEWS_NO,
+						   ITEM_CONTENT, ITEM_URL, ITEM_COUNT, ITEM_ENABLED
+					FROM OPT_ITEM
+					ORDER BY ITEM_NUM_SEQ)
+			  WHERE ROWNUM <![CDATA[<=]]> #{endCount})
+		WHERE R <![CDATA[>=]]> #{startCount}
+	</select>
+	
+	<update id="itemUnDelete" parameterType="hashmap">
+		UPDATE OPT_ITEM
+		SET ITEM_ENABLED = 'Y'
+		WHERE ITEM_NUM_SEQ IN
+		<foreach collection="item_num_seq" item="seq" open="(" close=")" separator=",">
+			#{seq}
+		</foreach>
+	</update>
+	
+	<update id="itemDelete" parameterType="hashmap">
+		UPDATE OPT_ITEM
+		SET ITEM_ENABLED = 'N'
+		WHERE ITEM_NUM_SEQ IN
+		<foreach collection="item_num_seq" item="seq" open="(" close=")" separator=",">
+			#{seq}
+		</foreach>
+	</update>
+	
+</mapper>

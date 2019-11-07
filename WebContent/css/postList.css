@@ -1,0 +1,331 @@
+html,body{
+	margin:0;
+	padding:0;
+	border:0;
+	color: #888;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -1px;
+    height: 100%;
+}
+
+ul,li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+setion {
+	display:block;
+}
+
+.content_area{
+	margin:0;
+    padding-top: 10px;	
+}
+
+a {
+	text-decoration: none;
+}
+
+/* 사이드바 */
+.side_menu_nav{
+	float: left;
+    width: 15%;
+    height: 780px;
+    position: absolute;
+    top: 0px;
+}
+
+.sidenav {
+			height:100%;
+			width: 0;
+			position: fixed;
+			z-index:1;
+			top: 0;
+			left: 0;
+			background-color: #7c7c7c;
+			overflow-x: hidden;
+			transition:0.5s ease-in-out;
+			padding-top: 60px;
+			
+		}
+		.sidenav a {
+			padding: 8px 8px 8px 32px;
+			text-decoration: none;
+			font-size: 25px;
+			color: #fff;
+			display: block;
+			transition: 0.2s ease-in-out;
+		}
+		.sidenav a:hover, .offcanvas a:focus {
+			color: #000;
+		}
+		.closebtn {
+			position: absolute;
+			top: 0;
+			right: 25px;
+			font-size: 36px !important;
+			margin-left: 50px;
+		}
+		
+		
+		/* 미디어쿼리 적용 */
+		@media screen and (max-height:450px) {
+			.sidenav {
+				padding-top:15px;
+			}
+			.sidenav a {
+				font-size: 18px;
+			}
+		}
+
+/*햄버거*/	
+.wrapper {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 70px;
+    left: 230px;
+}
+
+/* 추가된 부분 */
+.line-wrapper {
+     cursor: pointer;
+    width: 56px;
+    height: 35px;
+    position: relative;
+    top: 52.5px;
+    left: 100px;
+}
+
+/* 추가된 부분 */
+.line {
+  background: #888;
+  margin-top:6px;
+  margin-bottom:6px;
+  width: 46px;
+  height:7px; 
+  border-radius:2px;
+  box-shadow:0 1px 3px rgba(0,0,0,.5);
+  position:relative;
+}	
+
+
+.page_title {
+    padding: 60px 0 50px;
+    text-align: center;
+}
+
+
+.postboxContent {
+    width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 80px;
+}    
+
+
+
+
+
+.pagepoint {
+	width: 100%;
+	text-align: center;
+}
+
+table {
+	border-spacing: 0px;
+	text-align: center;
+	width: 100%;
+}
+
+tr td {
+	font-family: "lucida grande", verdana, sans-serif;
+	font-size: 13pt;
+	padding: 3px 8px;
+	background: #fff;
+}
+
+thead td {
+	color: #fff;
+	background-color: #a85ad8;
+	font-weight: bold;
+	border-bottom: 1px solid #999;
+	height: 50px;
+}
+
+tbody td {
+	border-left: 1px solid #D9D9D9;
+	height: 50px;
+}
+
+tbody tr.even td {
+	background: #eee;
+}
+
+tbody tr.ruled td {
+	color: #000;
+	background-color: #C6E3FF;
+	font-size: 14pt;
+	border-color: #3292FC;
+}
+
+
+/* Opera fix */
+head:first-child+body tr.ruled td {
+	background-color: #C6E3FF;
+}
+
+.btn {
+	display: inline-block;
+	padding: 10px;
+	border-radius: 5px; /*optional*/
+	font-size: .875em;
+	float: right;
+	width: 100px;
+	height: 40px;
+	margin-right: 10px;
+}
+
+.pagination {
+	padding: 20px;
+	padding-left: 0px;
+	padding-right: 0px;
+	margin-bottom: 20px;
+}
+
+.page {
+	display: inline-block;
+	padding: 0px 9px;
+	margin-right: 4px;
+	border-radius: 3px;
+	border: solid 1px #c0c0c0;
+	background: #e9e9e9;
+	box-shadow: inset 0px 1px 0px rgba(255, 255, 255, .8), 0px 1px 3px
+		rgba(0, 0, 0, .1);
+	font-size: .875em;
+	font-weight: bold;
+	text-decoration: none;
+	color: #717171;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 1);
+}
+
+.page:hover, .page.gradient:hover {
+	background: #fefefe;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FEFEFE),
+		to(#f0f0f0));
+	background: -moz-linear-gradient(0% 0% 270deg, #FEFEFE, #f0f0f0);
+}
+
+.page.active {
+	border: none;
+	background: #616161;
+	box-shadow: inset 0px 0px 8px rgba(0, 0, 0, .5), 0px 1px 0px
+		rgba(255, 255, 255, .8);
+	color: #f0f0f0;
+	text-shadow: 0px 0px 3px rgba(0, 0, 0, .5);
+}
+
+.page.gradient {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f8f8f8),
+		to(#e9e9e9));
+	background: -moz-linear-gradient(0% 0% 270deg, #f8f8f8, #e9e9e9);
+}
+
+.container {
+	margin: 50px auto;
+	width: 500px;
+	text-align: center;
+}
+
+.container>.dropdown {
+	margin: 0 20px;
+	vertical-align: top;
+}
+
+.dropdown {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	width: 120px;
+	background: #f2f2f2;
+	border: 1px solid;
+	border-color: white #f7f7f7 #f5f5f5;
+	border-radius: 3px;
+	background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+	background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+	background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+	background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.06));
+	-webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+	height: 40px;
+	border-radius: 5px;
+}
+#postbox { 
+			margin-top:8px;
+			font-size: .800em;
+			
+		}
+
+.dropdown:before, .dropdown:after {
+	content: '';
+	position: absolute;
+	z-index: 2;
+	top: 15px;
+	right: 10px;
+	width: 0;
+	height: 0;
+	border: 4px dashed;
+	border-color: #888 transparent;
+	pointer-events: none;
+}
+
+.dropdown:before {
+	border-bottom-style: solid;
+	border-top: none;
+}
+
+.dropdown:after {
+	margin-top: 7px;
+	border-top-style: solid;
+	border-bottom: none;
+}
+
+.dropdown-select {
+	position: relative;
+	width: 130%;
+	margin: 0;
+	padding: 6px 8px 6px 10px;
+	height: 28px;
+	line-height: 14px;
+	font-size: 12px;
+	color: #62717a;
+	text-shadow: 0 1px white;
+	/* Fallback for IE 8 */
+	background: #f2f2f2;
+	/* "transparent" doesn't work with Opera */
+	background: rgba(0, 0, 0, 0) !important;
+	border: 0;
+	border-radius: 0;
+	-webkit-appearance: none;
+}
+
+.dropdown-select:focus {
+	z-index: 3;
+	width: 100%;
+	color: #394349;
+	outline: 2px solid #49aff2;
+	outline: 2px solid -webkit-focus-ring-color;
+	outline-offset: -2px;
+}
+
+.dropdown-select>option {
+	margin: 3px;
+	padding: 6px 8px;
+	text-shadow: none;
+	background: #f2f2f2;
+	border-radius: 3px;
+	cursor: pointer;
+}

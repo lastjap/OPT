@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="LoginMapper">
+
+	<select id="login" resultType="MemberDto">
+		SELECT *
+		FROM OPT_MEMBER
+		WHERE
+		OPT_ID = #{id} AND OPT_PW = #{pw}
+	</select>
+
+	<select id="emailChk" parameterType="String"
+		resultType="MemberDto">
+		SELECT *
+		FROM OPT_MEMBER
+		WHERE
+		OPT_EMAIL = #{email}
+	</select>
+
+	<insert id="register" parameterType="MemberDto">
+		INSERT INTO OPT_MEMBER
+		VALUES(
+		MEMBERSEQ.NEXTVAL,
+		#{opt_id},
+		#{opt_pw},
+		#{opt_name},
+		#{opt_birth},
+		#{opt_addr},
+		#{opt_phone},
+		#{opt_email},
+		'Y',
+		#{opt_gender},
+		'user',
+		10000,
+		SYSDATE
+		)
+	</insert>
+
+	<update id="updateUser" parameterType="MemberDto">
+		UPDATE OPT_MEMBER
+		SET OPT_NAME = #{opt_name},
+		OPT_BIRTH = #{opt_birth},
+		OPT_ADDR = #{opt_addr},
+		OPT_PHONE = #{opt_phone},
+		OPT_EMAIL = #{opt_email},
+		WHERE
+		OPT_EMAIL = #{opt_email}
+	</update>
+
+	<select id="findId" parameterType="String"
+		resultType="MemberDto">
+		SELECT *
+		FROM OPT_MEMBER
+		WHERE
+		OPT_EMAIL = #{email}
+	</select>
+
+</mapper>

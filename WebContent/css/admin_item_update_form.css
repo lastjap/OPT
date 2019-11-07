@@ -1,0 +1,26 @@
+	
+	body {
+		background: #fbffe6;
+		margin: 0px;
+	}
+	
+	table {
+		position: relative;
+	    top: 78px;
+	    margin: 0 auto;
+	    border: 1px solid black;
+	    padding: 30px;
+	}
+	th {
+		background: #e8fdb6;
+		text-align: right;
+	}
+	input[type=button] {
+		background: white;
+		border: 1px solid black;
+		border-radius: 6px;
+	}
+	input[type=button]:hover {
+		background: #F5BCA9;
+		cursor: pointer;
+	}

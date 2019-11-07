@@ -1,0 +1,28 @@
+
+body{
+	margin:0;
+	padding:0;
+	border:0;
+	
+}
+
+ul,li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+setion {
+	display:block;
+}
+
+a {
+	text-decoration: none;
+}
+.content_wrap{
+	width: 1200px;
+    margin: 0 auto;
+
+}
+.opt_title h2{
+	text-align: center;
+}

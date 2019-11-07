@@ -1,0 +1,132 @@
+
+body{
+	margin:0;
+	padding:0;
+	border:0;
+	
+}
+
+ul,li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+setion {
+	display:block;
+}
+
+a {
+	text-decoration: none;
+}
+
+.regist_content{
+	width: 1200px;
+	margin: 0 auto;
+	margin-top: 70px;
+	
+}
+.regist_content h2{
+	text-align: center;
+    color: #888;
+    font-style: normal;
+    margin-bottom: 30px;
+    
+}
+
+
+table{
+	width: 50%;
+    /* border-collapse: collapse; */
+    /* border-spacing: 0; */
+    /* table-layout: fixed; */
+    word-wrap: break-word;
+    /* word-break: keep-all; */
+    margin:0 auto;
+}
+
+.regist_area table tr th{
+	padding: 13px 0;
+    border-bottom: 1px solid #e6e6e6;
+    background-color: #fff;
+    font-weight: bold;
+    font-size: 15px;
+}
+.regist_title, .td_content{
+color: #575757;
+}
+
+.regist_area table tr td{
+	padding: 13px 0;
+    border-bottom: 1px solid #e6e6e6;
+    font-size: 14px;
+}
+.btn {
+	background-color: #cbb795;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+}
+.id_input{
+	padding: 8px;
+    width: 80%;
+}	
+.id_input_btn{
+	padding: 8.5px;
+}
+.input_form{
+	padding:8px;
+	width: 95%;
+}
+.post_num{
+	padding: 8px;
+    width: 73.5%;
+}
+.margin-bottom-5px {
+	margin-bottom: 5px;
+}
+.margin-top-5px {
+	margin-top: 5px;
+}
+.width-17 {
+	width:17%;
+}
+.email_input{
+	padding: 8px;
+    width: 28%;
+}
+.email_select{
+	padding: 8px;
+    width: 30.5%;
+}
+.email_btn{
+	padding: 8px;
+    width: 99.3%;
+}
+.email_confirm{
+	padding: 8px;
+    width: 85%;
+}
+.email_confirm_btn{
+	padding: 8.5px;
+}
+.regist_btn{
+	    display: block;
+    width: 25%;
+    height: 60px;
+    padding-top: 1px;
+    border: none;
+    border-radius: 0;
+    background-color: #cbb795;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 61px;
+    margin: 20px 0 14px;
+    border-radius: 50px;
+    margin: 0 auto;
+    margin-top: 70px;
+    
+}

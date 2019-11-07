@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ItemCommentMapper">
+
+	<select id="itemCommentList" parameterType="int" resultType="ItemCommentDto">
+	SELECT OPT_ID, OPT_NO_SEQ, ITEM_NUM_SEQ, ITEM_COMMENT_NO_SEQ, ITEM_COMMENT_CONTENT, ITEM_COMMENT_DATE
+	FROM (SELECT M.OPT_ID, I.OPT_NO_SEQ, I.ITEM_NUM_SEQ, I.ITEM_COMMENT_NO_SEQ, I.ITEM_COMMENT_CONTENT, I.ITEM_COMMENT_DATE
+	FROM OPT_ITEM_COMMENT I, OPT_MEMBER M
+	WHERE I.OPT_NO_SEQ = M.OPT_NO_SEQ)
+	WHERE ITEM_NUM_SEQ = #{item_num_seq}
+	ORDER BY ITEM_COMMENT_NO_SEQ DESC
+	</select>
+	
+	<insert id="insertItemComment" parameterType="ItemCommentDto">
+	INSERT INTO OPT_ITEM_COMMENT VALUES(
+	#{opt_no_seq}, #{item_num_seq}, ITEMCOMMENTSEQ.NEXTVAL,
+	#{item_comment_content}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI')
+	)	
+	</insert>
+	
+	<delete id="deleteItemComment" parameterType="int">
+	DELETE FROM OPT_ITEM_COMMENT
+	WHERE ITEM_COMMENT_NO_SEQ = #{item_comment_no_seq}
+	</delete>
+
+	
+</mapper>

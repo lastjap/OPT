@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CalMapper">
+	
+	<insert id="insertCal" parameterType="calendarDto">
+		INSERT INTO OPT_CALENDAR 
+		VALUES(#{opt_no_seq},CALENDARSEQ.NEXTVAL,#{calendar_title},#{calendar_startday},#{calendar_enddate},null,SYSDATE)
+	</insert>
+	
+	<select id="calselectList"  parameterType="int" resultType="calendarDto">
+	SELECT TO_DATE(REPLACE(CALENDAR_ENDDATE,'-','')) - TO_DATE(REPLACE(CALENDAR_STARTDAY,'-','')) as count, 
+	(TO_DATE(REPLACE(CALENDAR_ENDDATE,'-',''))+1) as nextDate , CALENDAR_ENDDATE, CALENDAR_STARTDAY, CALENDAR_TITLE, CALENDAR_NO_SEQ
+	FROM OPT_CALENDAR
+	WHERE OPT_NO_SEQ = #{opt_no_seq}
+	</select>
+	<select id="calselectone" parameterType="int" resultType="calendarDto">
+	SELECT * FROM OPT_CALENDAR
+	WHERE CALENDAR_NO_SEQ = #{cal_no_seq}
+	</select>
+	<update id="updateCal" parameterType="calendarDto">
+	UPDATE OPT_CALENDAR SET CALENDAR_TITLE = #{calendar_title},  CALENDAR_STARTDAY = #{calendar_startday}, CALENDAR_ENDDATE = #{calendar_enddate},CALENDAR_REGDATE =SYSDATE
+	WHERE CALENDAR_NO_SEQ = #{calendar_no_seq}
+	</update>
+	<delete id="deleteCal" parameterType="int">
+	DELETE FROM OPT_CALENDAR 
+	WHERE CALENDAR_NO_SEQ = #{cal_no_seq}
+	</delete>
+	<update id="updateDrop" parameterType="calendarDto">
+	UPDATE OPT_CALENDAR SET  CALENDAR_STARTDAY = #{calendar_startday}, CALENDAR_ENDDATE = #{calendar_enddate} , CALENDAR_REGDATE =SYSDATE
+	WHERE CALENDAR_NO_SEQ = #{calendar_no_seq}
+	</update>
+	<update id="updateResize" parameterType="calendarDto">
+	UPDATE OPT_CALENDAR SET  CALENDAR_STARTDAY = #{calendar_startday}, CALENDAR_ENDDATE = #{calendar_enddate} , CALENDAR_REGDATE =SYSDATE
+	WHERE CALENDAR_NO_SEQ = #{calendar_no_seq}
+	</update>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BasketMapper">
+
+	<insert id="insertBasket" parameterType="basketDto">
+		INSERT INTO OPT_BASKET
+		VALUES(#{opt_no_seq}, BASKETSEQ.NEXTVAL, #{basket_item_no}, #{basket_item_url}, #{basket_item_name}, #{basket_item_count}, #{basket_item_price})
+	</insert>
+	
+	<select id="selectBasket" parameterType="int" resultType="basketDto">
+		SELECT *
+		FROM OPT_BASKET
+		WHERE BASKET_NO_SEQ = #{basket_no}	
+	</select>
+	
+	
+	<select id="basketlist" parameterType="int" resultType="basketDto">
+		SELECT *
+		FROM OPT_BASKET
+		WHERE OPT_NO_SEQ = #{opt_no}
+		ORDER BY BASKET_NO_SEQ ASC
+	</select>
+	
+	<update id="updateBasket" parameterType="java.util.List">
+		<foreach collection="list" item="basketDto" open="DECLARE BEGIN" close="; END;" separator=";">
+		UPDATE OPT_BASKET SET
+		BASKET_ITEM_COUNT = #{basketDto.basket_item_count}
+		WHERE BASKET_NO_SEQ = #{basketDto.basket_no_seq}
+		</foreach>
+	</update>
+	
+	
+	<delete id="basketmuldel" parameterType="map">  
+  		DELETE FROM OPT_BASKET
+  		WHERE BASKET_NO_SEQ IN
+  		<foreach collection="seqs" item="seq" open="(" separator="," close=")">
+		#{seq}		 		
+  		</foreach>
+  	</delete>
+	
+	<delete id="deleteBasket" parameterType="int">  
+		DELETE FROM OPT_BASKET
+		WHERE BASKET_NO_SEQ = #{basket_no_seq}
+	</delete>
+	
+	
+  	
+	
+</mapper>

@@ -1,0 +1,29 @@
+.paymentMain{
+	width: 1200px;
+	margin: 0 auto;	
+    padding-top: 50px;
+    padding-bottom: 50px;
+	
+	
+}
+
+.user_table{    	
+   	border-top-width: 2px;
+   	 
+}
+
+
+.paymentBtn{
+	border-radius: 5px;
+    font-size: .875em;
+    width: 100px;
+    height: 40px;
+    cursor: pointer;
+}
+
+
+hr{
+	border-style: solid;
+	border-color: #ebebeb;	
+}
+

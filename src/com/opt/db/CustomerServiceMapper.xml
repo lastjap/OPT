@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CustomerMapper">
+
+	<select id="customerList" resultType="CustomerDto">
+	SELECT OPT_ID, OPT_NO_SEQ,CUSTOMER_NO_SEQ ,CUSTOMER_TITLE, CUSTOMER_CONTENT, CUSTOMER_REGDATE
+	FROM (SELECT M.OPT_ID, S.OPT_NO_SEQ,S.CUSTOMER_NO_SEQ ,S.CUSTOMER_TITLE, S.CUSTOMER_CONTENT, S.CUSTOMER_REGDATE
+	FROM OPT_CUSTOMER_SERVICE S, OPT_MEMBER M 
+	WHERE S.OPT_NO_SEQ = M.OPT_NO_SEQ)
+	</select>
+	
+	<select id="customerPaging" parameterType="map" resultType="CustomerDto">
+	SELECT R ,  OPT_ID, OPT_NO_SEQ,CUSTOMER_NO_SEQ ,CUSTOMER_TITLE, CUSTOMER_CONTENT, CUSTOMER_REGDATE
+	FROM(SELECT ROWNUM AS R , OPT_ID, OPT_NO_SEQ,CUSTOMER_NO_SEQ ,CUSTOMER_TITLE, CUSTOMER_CONTENT, CUSTOMER_REGDATE
+	FROM(SELECT M.OPT_ID, S.OPT_NO_SEQ,S.CUSTOMER_NO_SEQ ,S.CUSTOMER_TITLE, S.CUSTOMER_CONTENT, S.CUSTOMER_REGDATE
+	FROM OPT_CUSTOMER_SERVICE S, OPT_MEMBER M 
+	WHERE S.OPT_NO_SEQ = M.OPT_NO_SEQ ORDER BY CUSTOMER_NO_SEQ DESC))	
+	WHERE R BETWEEN #{start} AND #{end}
+	</select>
+	
+	<insert id="insertCustomerBoard" parameterType="CustomerDto">
+	INSERT INTO OPT_CUSTOMER_SERVICE
+		VALUES(
+		#{opt_no_seq},
+		CUSTOMERSEQ.NEXTVAL,
+		#{customer_title},
+		#{customer_content},
+		SYSDATE,
+		' '
+		)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	<select id="faqList" resultType="faqDto">
+	SELECT * FROM OPT_FAQ		
+	</select>
+	
+	<select id="faqListPage" parameterType="map" resultType="faqDto">
+	SELECT R, FAQ_NO_SEQ, FAQ_TITLE,FAQ_ID, FAQ_CONTENT, FAQ_REGDATE
+	FROM (SELECT ROWNUM AS R, FAQ_NO_SEQ, FAQ_TITLE,FAQ_ID, FAQ_CONTENT, FAQ_REGDATE
+	FROM (SELECT FAQ_NO_SEQ, FAQ_TITLE,FAQ_ID, FAQ_CONTENT, FAQ_REGDATE
+	FROM OPT_FAQ
+	ORDER BY FAQ_NO_SEQ DESC))
+	WHERE R BETWEEN #{start} AND #{end}
+	</select>
+	
+	<insert id="insertFaq" parameterType="faqDto">
+	INSERT INTO OPT_FAQ VALUES(
+	FAQSEQ.NEXTVAL,
+	#{faq_title},
+	'ADMIN',
+	#{faq_content},
+	SYSDATE
+	)	
+	</insert>
+	
+	<update id="updateFaq" parameterType="faqDto">
+	UPDATE OPT_FAQ SET
+	FAQ_TITLE = #{faq_title}, FAQ_CONTENT = #{faq_content}
+	WHERE FAQ_NO_SEQ = #{faq_no_seq}	
+	</update>
+	
+	<delete id="deleteFaq" parameterType="int">
+	DELETE FROM OPT_FAQ
+	WHERE FAQ_NO_SEQ =  #{faq_no_seq}	
+	</delete>
+	
+	
+</mapper>

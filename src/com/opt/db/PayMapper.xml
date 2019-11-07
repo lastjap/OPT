@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PayMapper">
+
+	<select id="pay_count" resultType="int">
+		SELECT COUNT(*)
+		FROM OPT_PAYMENT P, OPT_MEMBER M
+		WHERE P.OPT_NO_SEQ = M.OPT_NO_SEQ
+		AND P.OPT_NO_SEQ = #{num}
+	</select>
+	
+	<select id="paymentList" resultType="PaymentDto">
+		SELECT *
+		FROM OPT_PAYMENT
+		ORDER BY PAY_SEQ
+		SELECT R , PAY_DATE , NAME , PAY_ALL
+		FROM(SELECT ROWNUM R, PAY_DATE ,I.ITEM_NAME NAME, P.PAY_TOTAL PAY_ALL
+		FROM OPT_PAYMENT P , OPT_ITEM I , OPT_MEMBER M
+		WHERE M.OPT_NO_SEQ = P.OPT_NO_SEQ
+		AND P.ITEM_NUM_SEQ = I.ITEM_NUM_SEQ
+		AND M.OPT_NO_SEQ = #{no})
+		ORDER BY R DESC
+	</select>
+	
+	<select id="paymentAllList" resultType="PaymentDto">
+		SELECT *
+		FROM OPT_PAYMENT
+	</select>
+	
+	<insert id="insertPayment" parameterType="PaymentDto">
+		INSERT INTO OPT_PAYMENT VALUES(
+		#{opt_no_seq}, #{item_num}, PAYSEQ.NEXTVAL, #{pay_recipient_name},
+		#{pay_place}, #{pay_phone}, #{pay_memo}, #{pay_count}, SYSDATE, #{pay_total}
+		)
+	</insert>
+</mapper>

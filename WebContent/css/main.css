@@ -1,0 +1,179 @@
+.content_area {
+	width: 100%;
+	height: 100px;
+	z-index: 70;
+	display: block;
+}
+
+html, body {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.topmenu li {
+	list-style-type: none;
+	margin: 3px;
+	position: relative;
+	font-size: 10px;
+}
+.background {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	overflow: hidden;
+	will-change: transform;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	height: 130vh;
+	position: fixed;
+	width: 100%;
+	-webkit-transform: translateY(20vh);
+	-ms-transform: translateY(20vh);
+	transform: translateY(20vh);
+	-webkit-transition: all 1.4s cubic-bezier(0.22, 0.44, 0, 1);
+	transition: all 1.4s cubic-bezier(0.22, 0.44, 0, 1);
+}
+
+.background:before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+}
+
+.background:first-child {
+	background-image: url("image/exercise.jpg");
+	-webkit-transform: translateY(-10vh);
+	-ms-transform: translateY(-10vh);
+	transform: translateY(-10vh);
+}
+
+.background:first-child .content-wrapper {
+	-webkit-transform: translateY(10vh);
+	-ms-transform: translateY(10vh);
+	transform: translateY(10vh);
+}
+
+.background:nth-child(2) {
+	background-image: url("../main_image/cabbage.jpg");
+}
+
+.background:nth-child(3) {
+	background-image: url("../main_image/veg.jpg");
+}
+
+/* Set stacking context of slides */
+.background:nth-child(1) {
+	z-index: 2;
+}
+
+.background:nth-child(2) {
+	z-index: 1;
+}
+
+.content-wrapper {
+	height: 100vh;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	text-align: center;
+	-webkit-flex-flow: column nowrap;
+	-ms-flex-flow: column nowrap;
+	flex-flow: column nowrap;
+	color: #fff;
+	font-family: Montserrat;
+	text-transform: uppercase;
+	-webkit-transform: translateY(40vh);
+	-ms-transform: translateY(40vh);
+	transform: translateY(40vh);
+	will-change: transform;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	-webkit-transition: all 1.9s cubic-bezier(0.22, 0.44, 0, 1);
+	transition: all 1.9s cubic-bezier(0.22, 0.44, 0, 1);
+}
+
+.content-title {
+	font-size: 12vh;
+	line-height: 1.4;
+}
+
+.Fixed {
+	position: fixed;
+	top: 0px;
+}
+.Menu { /*상단 메뉴바 전체부분의  div*/
+	width: 100%;
+    height: 80px;
+    position: fixed;
+    z-index: 70;
+    background-color: rgba(80,80,80,0.2);
+    border-bottom: 1px solid rgba(80,80,80,0.8);
+}
+
+.innerMenu { /*상단 메뉴바 안에 들어가는 컨텐츠 부분의 div*/
+	z-index: 70;
+    width: 1200px;
+    height: 80px;
+    position: fixed;
+    left: 51%;
+    transform: translate(-50%);
+}
+
+.menulogo{ /*로고부분 (따로뺌)*/
+	float: left;
+    margin-right: 55px;
+}
+.menulist { /*메뉴 리스트 a링크들 / 로고와 구분하려고 따로 줌 */
+	float: left;
+    text-decoration: none;
+    font-weight: bold;
+    color: #dddddd;
+    width: 120px;
+    margin-left: 18px;
+    margin-right: -4px;
+    font-size: 24px;
+    display: block;
+    text-align: center;
+    text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+}
+.scrollone {
+	background-image: url("../main_image/exercise.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	height: 100vh;
+	background-attachment: scroll;
+}
+
+.scrolltwo {
+	background-image: url("../main_image/veg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	height: 100vh;
+	background-attachment: scroll;
+	background-position: bottom;
+}
+
+.scrollthree {
+	background-image: url("./main_image/cabbage.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	height: 100vh;
+	background-attachment: scroll;
+	background-position: bottom;
+}

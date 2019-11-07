@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderMapper">
+
+	<select id="order_list" resultType="orderdto">
+		SELECT R , PAY_DATE , NAME , PAY_ALL
+		FROM(SELECT ROWNUM R, PAY_DATE ,I.ITEM_NAME NAME, P.PAY_TOTAL PAY_ALL
+		FROM OPT_PAYMENT P , OPT_ITEM I , OPT_MEMBER M
+		WHERE M.OPT_NO_SEQ = P.OPT_NO_SEQ
+		AND P.ITEM_NUM_SEQ = I.ITEM_NUM_SEQ
+		AND M.OPT_NO_SEQ = #{no})
+		ORDER BY R DESC
+	</select>
+	
+</mapper>

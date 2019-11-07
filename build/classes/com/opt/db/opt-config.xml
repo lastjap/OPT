@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+
+	<properties resource="com/opt/db/db.properties"></properties>
+
+	<typeAliases>
+		<typeAlias type="com.opt.dto.MemberDto" alias="MemberDto" />
+		<typeAlias type="com.opt.dto.OrderListDto" alias="orderdto"/>
+		<typeAlias type="com.opt.dto.ItemDto" alias="ItemDto"/>
+		<typeAlias type="com.opt.dto.PaymentDto" alias="PaymentDto"/>
+		<typeAlias type="com.opt.dto.CouponDto" alias="couponDto" />
+		<typeAlias type="com.opt.dto.BasketDto" alias="basketDto" />
+		<typeAlias type="com.opt.dto.CalendarDto" alias="calendarDto"/>
+		<typeAlias type="com.opt.dto.PostboxDto" alias="postboxDto" />
+		<typeAlias type="com.opt.dto.VideoClipDto" alias="VideoClipDto" />
+		<typeAlias type="com.opt.dto.VideoComment" alias="VideoCommentDto" />
+		<typeAlias type="com.opt.dto.ItemCommentDto" alias="ItemCommentDto" />
+		<typeAlias type="com.opt.dto.CustomerServiceDto" alias="CustomerDto"/>
+		<typeAlias type="com.opt.dto.FaqDto" alias="faqDto"/>
+		<typeAlias type="com.opt.dto.AdminAnswerDto" alias="AdminanswerDto"/>
+				
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/opt/db/opt-mapper.xml" />
+		<mapper resource="com/opt/db/AdminMapper.xml" />
+		<mapper resource="com/opt/db/CouponMapper.xml" />
+		<mapper resource="com/opt/db/ItemMapper.xml" />
+		<mapper resource="com/opt/db/LoginMapper.xml" />
+		<mapper resource="com/opt/db/OrderMapper.xml" />
+		<mapper resource="com/opt/db/PayMapper.xml" />
+		<mapper resource="com/opt/db/BasketMapper.xml" />
+		<mapper resource="com/opt/db/CalendarMapper.xml"/>
+		<mapper resource="com/opt/db/PostboxMapper.xml"/>
+		<mapper resource="com/opt/db/VideoMapper.xml"/>
+		<mapper resource="com/opt/db/ItemCommentMapper.xml"/>
+		<mapper resource="com/opt/db/CustomerServiceMapper.xml"/>
+		<mapper resource="com/opt/db/AdminAnswerMapper.xml"/>
+	</mappers>
+
+
+</configuration>
